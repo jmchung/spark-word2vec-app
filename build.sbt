@@ -3,11 +3,14 @@ import sbtassembly.Plugin.AssemblyKeys._
 
 assemblySettings
 
-name := "hierarchical-clustering"
+name := "word2vec-wikipedia"
 
 version := "0.0.1"
 
 scalaVersion := "2.10.4"
+
+// kuromoji
+resolvers += "Atilika Open Source repository" at "http://www.atilika.org/nexus/content/repositories/atilika"
 
 // Can't parallelly execute in test
 parallelExecution in Test := false
@@ -18,6 +21,7 @@ seq(sbtprotobuf.ProtobufPlugin.protobufSettings: _*)
 // additional libraries
 libraryDependencies ++= Seq(
   "org.scalatest" %% "scalatest" % "1.9.1" % "test",
+  "org.atilika.kuromoji" % "kuromoji" % "0.7.7",
   "org.apache.spark" %% "spark-core" % "1.1.0" % "provided",
   "org.apache.spark" %% "spark-sql" % "1.1.0" % "provided",
   "org.apache.spark" %% "spark-hive" % "1.1.0" % "provided",
