@@ -24,25 +24,59 @@ import scala.collection.JavaConversions._
 
 object WikipediaText {
 
-  def extract(rdd: RDD[String]): RDD[String] = {
+  def format(rdd: RDD[String]): RDD[String] = {
     rdd.map(line => line.replaceAll( """^[0-9]+\s*""", ""))
   }
 
-  def format(rdd: RDD[String]): RDD[Seq[String]] = {
+  def extract(rdd: RDD[String]): RDD[Seq[KuromojiToken]] = {
     val sc = rdd.sparkContext
     val kuromoji = new KuromojiTokenizer
     sc.broadcast(kuromoji)
     rdd.flatMap(sentences => sentences.split("。"))
         .map(sentence => kuromoji.extract(sentence))
   }
+
+  def extractNoun(rdd: RDD[String]): RDD[String] = {
+    val sc = rdd.sparkContext
+    val kuromoji = new KuromojiTokenizer
+    sc.broadcast(kuromoji)
+    rdd.flatMap(sentences => sentences.split("。"))
+        .flatMap(sentence => kuromoji.extractNoun(sentence))
+        .distinct(10)
+  }
+}
+
+case class KuromojiToken(
+  val surfaceForm: String,
+  val partOfSpeech1: String,
+  val partOfSpeech2: String,
+  val partOfSpeech3: String,
+  val partOfSpeech4: String,
+  val baseForm: String,
+  val reading: String,
+  val pronounciation: String) extends Serializable {
+
+  def this(token: Token) = this(
+    token.getSurfaceForm,
+    token.getAllFeaturesArray.apply(0),
+    token.getAllFeaturesArray.apply(1),
+    token.getAllFeaturesArray.apply(2),
+    token.getAllFeaturesArray.apply(3),
+    token.getAllFeaturesArray.apply(4),
+    token.getAllFeaturesArray.apply(5),
+    token.getAllFeaturesArray.apply(6)
+  )
 }
 
 private[example]
 class KuromojiTokenizer extends Serializable {
 
-  def extract(sentence: String): Seq[String] = {
-    val tokenArray = tokenizeWithFilter(sentence)
-    tokenArray.map(_.getSurfaceForm)
+  def extract(sentence: String): Seq[KuromojiToken] = {
+    tokenizeWithFilter(sentence).map(token => new KuromojiToken(token))
+  }
+
+  def extractNoun(sentence: String): Seq[String] = {
+    tokenizeWithFilter(sentence).filter(isProperNoun(_)).map(token => token.getSurfaceForm)
   }
 
   def tokenize(line: String): Seq[Token] = {

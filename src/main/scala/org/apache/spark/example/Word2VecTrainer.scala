@@ -34,8 +34,9 @@ object Word2VecTrainer {
     val sc = new SparkContext(conf)
 
     // Loads a text and then formats as a Word2Vec source
-    val rdd = sc.textFile(source)
-    val input = WikipediaText.format(rdd)
+    val origin = sc.textFile(source)
+    val lines = WikipediaText.format(origin)
+    val input = WikipediaText.extract(lines).map(seq => seq.map(token => token.surfaceForm))
 
     // Trains a Word2Vec model
     val model = new Word2Vec().setVectorSize(10).setSeed(42L).fit(input)

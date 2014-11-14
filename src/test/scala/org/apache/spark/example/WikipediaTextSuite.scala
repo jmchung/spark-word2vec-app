@@ -26,7 +26,7 @@ class WikipediaTextSuite extends FunSuite with LocalSparkContext with SampleData
     val filepath = getSampleDataFilePath()
     val rdd = sc.textFile(filepath)
 
-    val text = WikipediaText.extract(rdd)
+    val text = WikipediaText.format(rdd)
     assert(text.count() === 100)
     assert(text.collect().apply(0).length === 71222)
     assert(text.collect().apply(1).length === 207)
@@ -34,18 +34,28 @@ class WikipediaTextSuite extends FunSuite with LocalSparkContext with SampleData
     assert(text.collect().apply(99).length === 7039)
   }
 
-  test("tokenize") {
+  test("format") {
     val filepath = getSampleDataFilePath()
     val rdd = sc.textFile(filepath)
 
     // check the number of sentences in the sample data
-    val text = WikipediaText.extract(rdd)
-    val tokenizedSentences = WikipediaText.format(text)
+    val text = WikipediaText.format(rdd)
+    val tokenizedSentences = WikipediaText.extract(text)
     assert(tokenizedSentences.count() === 10746)
 
     val collected = tokenizedSentences.collect()
     assert(collected(0).length === 17)
     assert(collected(1).length === 23)
+  }
+
+  test("extractNouns") {
+    val filepath = getSampleDataFilePath()
+    val rdd = sc.textFile(filepath)
+
+    val text = WikipediaText.format(rdd)
+    val nouns = WikipediaText.extractNoun(text)
+    val collected = nouns.collect()
+    assert(collected.length === 3300)
   }
 }
 
