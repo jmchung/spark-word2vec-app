@@ -1,0 +1,10 @@
+{"maxCores" : "10", "numClusters" : "20", "trainMilliSec" : "184471", "dimension" : "1000", "rows" : "1000000", "numPartitions" : "10"}
+{"maxCores" : "20", "numClusters" : "20", "trainMilliSec" : "99672", "dimension" : "1000", "rows" : "1000000", "numPartitions" : "20"}
+{"maxCores" : "50", "numClusters" : "20", "trainMilliSec" : "66222", "dimension" : "1000", "rows" : "1000000", "numPartitions" : "50"}
+{"maxCores" : "100", "numClusters" : "20", "trainMilliSec" : "59998", "dimension" : "1000", "rows" : "1000000", "numPartitions" : "100"}
+{"maxCores" : "160", "numClusters" : "20", "trainMilliSec" : "58293", "dimension" : "1000", "rows" : "1000000", "numPartitions" : "160"}
+{"maxCores" : "10", "numClusters" : "20", "trainMilliSec" : "750518", "dimension" : "1000", "rows" : "5000000", "numPartitions" : "10"}
+{"maxCores" : "20", "numClusters" : "20", "trainMilliSec" : "430656", "dimension" : "1000", "rows" : "5000000", "numPartitions" : "20"}
+{"maxCores" : "50", "numClusters" : "20", "trainMilliSec" : "268077", "dimension" : "1000", "rows" : "5000000", "numPartitions" : "50"}
+{"maxCores" : "100", "numClusters" : "20", "trainMilliSec" : "251874", "dimension" : "1000", "rows" : "5000000", "numPartitions" : "100"}
+{"maxCores" : "160", "numClusters" : "20", "trainMilliSec" : "201279", "dimension" : "1000", "rows" : "5000000", "numPartitions" : "160"}

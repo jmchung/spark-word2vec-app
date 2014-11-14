@@ -1,0 +1,38 @@
+## Experiment 4: The Model Accuracy
+
+I checked the sum of the variance in each cluster.
+It means good model that the sum of the variance is enough to be low and that the number of given clusters with parameter is equal to that of result clusters.
+
+I know I have to evaluate a hierarichical clustering model with [Cophenic correlation coefficient](http://en.wikipedia.org/wiki/Cophenetic_correlation).
+However, the cost of the expeirment is very high in order to implement the function to calculate the coefficient. R and SciPy seems to have the way to calculating the coefficient. But it seemd to be difficult to apply my implementation result to them.
+ 
+### Experimental Procedure
+
+1. Generate the random data set with seed vector
+2. Apply the generated data to the hierarchical clustering algorithm
+3. Check the number of vectors and the variance of the each result cluster
+
+### Sample Experiment Result
+
+Following sample experiment result means my implementation is good.
+Because the variances of each cluster is very low and the number of vectors in each cluster is equal to that  generated seed vectors.
+
+Other experimental result are refered at Appendix B.
+
+Where `Total Rows` means the number of the input data rows.
+`Given # Clusters` means the number of clusters as one of the given parameters.
+`Result # Clusters` means the number of clusters  as a result of the clustering.
+`Dimension` means the number of dimensions of the input data vector.
+`Train Times` means the execution time as milliseconds to train the model.
+`Predict Time` means the execution time as milliseconds to predict with the data.
+`Squared Mean Variance` means the squared value of the mean variance for all result clusters.
+
+`Count` at `Result Vectors and Their Rows` means the nuber of vectors in each cluster.
+`Variance` at `Result Vectors and Their Rows` means the sum of the variances for all dimension of each cluster.
+`Vector` at `Result Vectors and Their Rows` means the head three element of the center of each cluster. In short, it is good that the vector is nearly equal to its seed vector.
+
+`Count` at `Seed Vectors and Their Rows` means the number of generated vectors of each cluster.
+`Seed Vector` at `Seed Vectors and Their Rows` means the head three elements of the seed vector of each cluster.
+
+```{r eval=FALSE, code=readLines("./data/accuracy-test/accuracy-test-5-5.txt")}
+```
